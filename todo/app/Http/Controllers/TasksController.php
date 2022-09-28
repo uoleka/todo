@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Task;
 
 class TasksController extends Controller
@@ -36,16 +37,22 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'task_name'     => 'required',
-            'description'   => 'required',
-            'location'      => 'required',
-            'date'          => 'required'
-            
-
+        $validator = validator::make($request->all(), [
+            'task_name'  => 'required',
+            'description' => 'required',
+            'location' => 'required',
+            'date' => 'required',
         ]);
+        if ($validator->fails()) {
+            return response([
+              'message' => 'Invalid params passed', // the message to show
+                'errors' => $validator->errors()
+            ], 422);
+        }
+        $data = $validator->validated();
         $task = Task::create($data);
         return response($task, 200);
+       
     }
 
     /**
@@ -79,15 +86,20 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->validate([
-            'task_name'     => 'required',
-            'description'   => 'required',
-            'location'      => 'required',
-            'date'          => 'required'
-            
-
+        $validator = validator::make($request->all(), [
+            'task_name'  => 'required',
+            'description' => 'required',
+            'location' => 'required',
+            'date' => 'required',
         ]);
-        $task = Task::where('id', $id)->update($data, $id);
+        if ($validator->fails()) {
+            return response([
+              'message' => 'Invalid params passed', // the message to show
+                'errors' => $validator->errors()
+            ], 422);
+        }
+        $updateData = $validator->validated();
+        $task = Task::where('id', $id)->update($updateData, $id);
         return response($task, 200);
     }
 
