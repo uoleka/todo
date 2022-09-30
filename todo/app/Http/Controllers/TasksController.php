@@ -46,8 +46,12 @@ class TasksController extends Controller
         if ($validator->fails()) {
             return response([
               'message' => 'Invalid params passed', // the message to show
-                'errors' => $validator->errors()
+              'errors' => $validator->errors()
             ], 422);
+        }
+        $isDuplicate = isDuplicate($request); // checks if the task already exists
+        if ($isDuplicate > 0) {
+            return response('The Task already exists', 422);
         }
         $data = $validator->validated();
         $task = Task::create($data);
@@ -95,12 +99,12 @@ class TasksController extends Controller
         if ($validator->fails()) {
             return response([
               'message' => 'Invalid params passed', // the message to show
-                'errors' => $validator->errors()
+              'errors' => $validator->errors()
             ], 422);
         }
         $updateData = $validator->validated();
         $task = Task::where('id', $id)->update($updateData, $id);
-        return response($task, 200);
+        return response('Task updated successfully', 200);
     }
 
     /**
@@ -115,4 +119,5 @@ class TasksController extends Controller
         $task->delete();
         return response('Task deleted', 200);
     }
+
 }
