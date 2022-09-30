@@ -73,6 +73,8 @@ install sail to launch the docker containers. To install sail on laravel visit h
 
 it is recommended to use the Alias as shown in the giude.
 
-After installing sail, in the terminal or command prompt, use the command 'sail artisan migrate' to populate the database.
+After installing sail, go to the file .env and set DB_DATABASE = todomanager, DB_USERNAME = sail, DB_PASSWORD = password
 
-Launch the docker desktop. When it is ready, go to the terminal or command prompt and use the command 'sail up' to launch the dev container.
+In the terminal or command prompt, use the command 'sail artisan migrate' to populate the database.
+
+Launch the docker desktop. When it is ready, go to the terminal or command prompt and use the command 'sail up' to launch the dev container and the Application is ready for use.
