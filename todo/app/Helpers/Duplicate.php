@@ -1,10 +1,23 @@
 <?php
-function isDuplicate($request)
+/**
+ * Check if the specified model already contains the variables.
+ * @param  object  $task
+ * @param  array   $tablesFields
+ * @param  string  $firstVariable
+ * @param  string  $secondVariable
+ * @param  string  $thirdVariable
+ * @return boolean
+ */
+function isDuplicate($task, $tableFields, $firstVariable, $secondVariable, $thirdVariable)
 {
-    $taskDuplicate = DB::table('tasks')
-                            ->where('task_name', $request->task_name)
-                            ->where('location', $request->location)
-                            ->whereDate('date', $request->date)
+    $taskDuplicate = $task::where($tableFields[0], $firstVariable)
+                            ->where($tableFields[1], $secondVariable)
+                            ->whereDate($tableFields[2], $thirdVariable)
                             ->count();
-    return $taskDuplicate;
+    if ($taskDuplicate) {
+        return true;
+    } else {
+        return false;
+    }
+    
 }

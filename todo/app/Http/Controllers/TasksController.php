@@ -45,12 +45,17 @@ class TasksController extends Controller
         ]);
         if ($validator->fails()) {
             return response([
-              'message' => 'Invalid params passed', // the message to show
+              'message' => 'Please fill in the necessary field(s)', // the message to show
               'errors' => $validator->errors()
             ], 422);
         }
-        $isDuplicate = isDuplicate($request); // checks if the task already exists
-        if ($isDuplicate > 0) {
+        $tableFields = ['task_name', 'location', 'date'];
+        $task           = new Task;
+        $firstVariable  = $request->task_name;
+        $secondVariable = $request->location;
+        $thirdVariable  = $request->date;
+        $isDuplicate    = isDuplicate($task, $tableFields, $firstVariable, $secondVariable, $thirdVariable); // checks if the task already exists using a helper function
+        if ($isDuplicate) {
             return response('The Task already exists', 422);
         }
         $data = $validator->validated();
