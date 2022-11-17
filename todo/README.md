@@ -62,3 +62,19 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## How to Run the Application
+
+To run the docker branch, you would need to have laravel installed. For guide on how to install laravel, visit https://laravel.com/docs/9.x/installation.
+
+Install docker desktop to run the image. To install docker desktop on mac, visit https://docs.docker.com/desktop/install/mac-install/ 
+
+install sail to launch the docker containers. To install sail on laravel visit https://laravel.com/docs/9.x/sail#installing-sail-into-existing-applications.
+
+it is recommended to use the Alias as shown in the giude.
+
+After installing sail, go to the file .env and set DB_DATABASE = todomanager, DB_USERNAME = sail, DB_PASSWORD = password
+
+In the terminal or command prompt, use the command 'sail artisan migrate' to populate the database.
+
+Launch the docker desktop. When it is ready, go to the terminal or command prompt and use the command 'sail up' to launch the dev container and the Application is ready for use.
